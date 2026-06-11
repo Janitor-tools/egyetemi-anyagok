@@ -1,4 +1,4 @@
-# SOC Vizsga — VPN + Fileserver Cheat Sheet
+# SOC Vizsga — VPN + Fileserver OpenSearch Help Sheet
 
 ## Hozzáférés
 
