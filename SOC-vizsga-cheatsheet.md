@@ -123,6 +123,55 @@ output {
 EOF
 ```
 
+```
+filter {
+
+if [log_type] == "auth" {
+
+grok {
+
+match => { "message" => [
+
+"%{TIMESTAMP_ISO8601:log_timestamp} %{HOSTNAME:hostname} %{WORD:service}: %{DATA: action} for %{USERNAME:user} from %{IP:src_ip} port %{NUMBER:port}",
+
+"%{TIMESTAMP_ISO8601:log_timestamp} %{HOSTNAME:hostname} %{WORD:service}: session %{WORD:session_action} for user %{USERNAME:user}",
+
+"%{TIMESTAMP_ISO8601:log_timestamp} %{HOSTNAME:hostname} %{WORD:service}: %{USERNAME:user} :  {GREEDYDATA:sudo_details}"
+
+]}
+
+}
+
+}
+
+if [log_type] == "access" {
+
+grok {
+
+match => { "message" => "%{COMMONAPACHELOG}" }
+
+}
+
+}
+
+if [log_type] == "firewall" {
+
+grok {
+
+match => { "message" => "%{TIMESTAMP_ISO8601:log_timestamp} %{HOSTNAME:hostname} %
+
+{WORD:action} %{WORD:protocol} %{IP:src_ip} %{IP:dst_ip} %{NUMBER:dst_port} %{NUMBER:src_
+
+port}" }
+
+}
+
+}
+
+}
+```
+
+
 ### Logstash indítás és ellenőrzés
 
 ```bash
